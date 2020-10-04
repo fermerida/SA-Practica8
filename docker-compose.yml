@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./web/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - api
+  db:
+    build: ./db
+    environment:
+      MYSQL_DATABASE: ecomerce
+      MYSQL_ROOT_PASSWORD: supersecret
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: supersecret
+      DATABASE_HOST: db
+  api:
+    build: ./api
+    environment:
+      DATABASE_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ecomerce
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: supersecret
+    ports:
+      - "3258:3258"
+    depends_on:
+      - db
+    restart: on-failure 
