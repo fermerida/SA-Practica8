@@ -1,0 +1,12 @@
+FROM mysql:5.7
+
+#ENV MYSQL_DATABASE ecomerce
+#ENV MYSQL_ROOT_PASSWORD 123
+#ENV MYSQL_USER mysql
+#ENV MYSQL_PASSWORD 123
+#ENV DATABASE_HOST db
+
+#EXPOSE 3307
+
+
+COPY ./sql-scripts /docker-entrypoint-initdb.d/
